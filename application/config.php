@@ -226,12 +226,12 @@ return [
 
     //css js images
     'resouce' =>[
-        'css'=> SITE_URL."/public/static/css/",
-        'js'=> SITE_URL."/public/static/js/",
-        'images'=> SITE_URL."/public/static/img/",
-        'admin_css'=> SITE_URL."/public/static/admin/",
-        'admin_js'=> SITE_URL."/public/static/admin/",
-        'admin_img'=> SITE_URL."/public/static/admin/",
+        'css'=> SITE_URL."/static/css/",
+        'js'=> SITE_URL."/static/js/",
+        'images'=> SITE_URL."/static/img/",
+        'admin_css'=> SITE_URL."/static/admin/",
+        'admin_js'=> SITE_URL."/static/admin/",
+        'admin_img'=> SITE_URL."/static/admin/",
     ],
 
     "web_root" => "http://".$_SERVER['SERVER_NAME'],
