@@ -15,7 +15,14 @@ use think\Request;
 
 class User extends Base
 {
+    public $user_model = null;
 
+    function __construct(Request $request)
+    {
+        session_start();
+        $this->user_model = new UserModel();
+        parent::__construct($request);
+    }
 
     public function register()
     {
@@ -41,7 +48,7 @@ class User extends Base
     }
 
     /**
-     * 注册页逻辑
+     * 注册流程
      */
     public function doRegister()
     {
@@ -56,25 +63,29 @@ class User extends Base
         //注册时间
         $post['Fregtime'] = time();
         //创建激活码
-        $post['Ftoken'] = md5($post['Fname'].$post['Fpassword'].$post['Fregtime']);
+        $post['Ftoken'] = md5($post['Fname'] . $post['Fpassword'] . $post['Fregtime']);
         //激活码过期时间限制
-        $post['FtokenExptime'] = time() + 3600*24;
-        $user_model = new UserModel();
+        $post['FtokenExptime'] = time() + 3600 * 24;
+
         //验证用户名
         if (strlen($post['Fname']) < 3) {
             $this->error('用户名最少3个字符哟~');
         }
-        $check_name = $user_model->userName($post['Fname']);
+        $check_name = $this->user_model->userName($post['Fname']);
         if ($check_name) {
             $this->error('该用户名已被注册，换一个吧~');
         }
+        //验证邮箱
+        if (!preg_match('/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ', $post['Femail'])) {
+            $this->error('邮箱格式填写不正确！');
+        }
         //验证验证码
         $check_code = VerifyHelper::check($code);
-        if(!$check_code) {
+        if (!$check_code) {
             $this->error('验证码错误');
         }
         //创建注册信息
-        $add_user = $user_model->addUser($post);
+        $add_user = $this->user_model->addUser($post);
         if ($add_user) {
             require_once 'class.phpmailer.php';
             include 'class.smtp.php';
@@ -86,10 +97,10 @@ class User extends Base
             $mail->CharSet = 'UTF-8';
             $mail->IsHTML(true);
             // 设置邮件正文
-            $mail->Body = "亲爱的".$post['Fname'].":<br/>欢迎您加入 LvyeCMS! 开放平台，您的账号需要邮箱认证，点击下面链接进行认证：<br/> <a href='http://".$_SERVER["HTTP_HOST"]."/apply/user/active/verify/".$post['Ftoken']."' target='_blank'>http://".$_SERVER["HTTP_HOST"]."/apply/user/active/verify/".$post['Ftoken']."</a><br/>如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问，该链接24小时内有效。
+            $mail->Body = "亲爱的" . $post['Fname'] . ":<br/>欢迎您加入 LvyeCMS! 开放平台，您的账号需要邮箱认证，点击下面链接进行认证：<br/> <a href='http://" . $_SERVER["HTTP_HOST"] . "/apply/user/active/verify/" . $post['Ftoken'] . "' target='_blank'>http://" . $_SERVER["HTTP_HOST"] . "/apply/user/active/verify/" . $post['Ftoken'] . "</a><br/>如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问，该链接24小时内有效。
                                                     邮件服务器自动发送邮件请勿回信!";
             // 设置发件人邮箱
-            $mail->From = "gsy@yougou-shop.com";
+            $mail->From = "gsy@alvye.cn";
             // 设置发件人名字
             $mail->FromName = 'LvyeCMS';
             // 设置邮件标题
@@ -101,24 +112,67 @@ class User extends Base
             // SMTP服务器的端口号
             $mail->Port = 465;
             // 设置用户名和密码。
-            $mail->Username = 'gsy@yougou-shop.com';
-            $mail->Password = '123456';
+            $mail->Username = 'gsy@alvye.cn';
+            $mail->Password = 'Gsy123';
             //收件人地址
             $mail->AddAddress($post['Femail']);
             if (!$mail->Send()) {
-                echo "发送失败：" . $mail->ErrorInfo;
+                $this->error("发送失败", "/apply/user/register");
             } else {
-                $this->error("注册成功，快去邮箱验证吧~","/apply/user/login");
+                $this->error("注册成功，快去邮箱验证吧~", "/apply/user/login");
             }
         }
     }
 
     /**
-     * 邮箱验证
+     * 邮箱激活
      */
-    public function active() {
+    public function active()
+    {
         $verify = Request::instance()->param("verify");
-        echo $verify;
+        //激活码有效期
+        $check_time = $this->user_model->checkTime($verify);
+        $now_time = time();
+        if ($now_time > $check_time) {
+            $this->error("您的激活码已过期，请登录您的账号重新发送激活邮件", "/apply/user/register");
+        } else {
+            $activation = $this->user_model->activation($verify);
+            if ($activation) {
+                $this->error("激活成功！", "/apply/user/login");
+            }
+        }
     }
 
+    /**
+     * 登录流程
+     */
+    public function doLogin()
+    {
+        $code = isset($_POST['code']) ? trim($_POST['code']) : '';
+        $post['Fname'] = isset($_POST['name']) ? stripslashes(trim($_POST['name'])) : '';
+        $post['Fpassword'] = isset($_POST['password']) ? md5(trim($_POST['password'])) : '';
+        //验证验证码
+        $check_code = VerifyHelper::check($code);
+        if (!$check_code) {
+            $this->error('验证码错误');
+        }
+        //匹配用户名密码
+        $user_id = $this->user_model->login($post['Fname'], $post['Fpassword']);
+        if ($user_id) {
+            if ($this->user_model->email($user_id)) {
+                $this->error('您的邮箱还未验证，快去邮箱验证吧~');
+            } else {
+                $_SESSION['user'] = $post['Fname'];
+                $this->error('登录成功', 'apply/index/index');
+            }
+        } else {
+            $this->error('用户信息填写错误！');
+        }
+    }
+
+    public function out()
+    {
+        unset($_SESSION['user']);
+        $this->error('退出登录', '/apply/user/login');
+    }
 }

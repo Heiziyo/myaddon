@@ -7,7 +7,7 @@ class Index  extends Base
     {
 
 
-
+        
         return $this->view->fetch('index');
 
     }
