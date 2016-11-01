@@ -25,5 +25,10 @@
     },
     "config": {
         "preferred-install": "dist"
+    },
+    "require": {
+        "gregwar/captcha": "1.*"
     }
+
+
 }

@@ -9,4 +9,5 @@ return array(
     'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
     'think\\captcha\\' => array($vendorDir . '/topthink/think-captcha/src'),
     'think\\' => array($baseDir . '/thinkphp/library/think'),
+    'Gregwar\\Captcha\\' => array($vendorDir . '/gregwar/captcha'),
 );

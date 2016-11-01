@@ -17,6 +17,10 @@ class ComposerStaticInit7fdba405564b2b944397ca2f91abeebe
             'think\\captcha\\' => 14,
             'think\\' => 6,
         ),
+        'G' => 
+        array (
+            'Gregwar\\Captcha\\' => 16,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -31,6 +35,10 @@ class ComposerStaticInit7fdba405564b2b944397ca2f91abeebe
         'think\\' => 
         array (
             0 => __DIR__ . '/../..' . '/thinkphp/library/think',
+        ),
+        'Gregwar\\Captcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gregwar/captcha',
         ),
     );
 
