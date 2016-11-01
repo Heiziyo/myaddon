@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加入开放平台</title>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}styles.css"/>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}bootstrap.min.css"/>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}bootstrap-responsive.css"/>
+    <script src="{$Think.config.resouce.js}jquery.min.js"></script>
+    <script src="{$Think.config.resouce.js}bootstrap.min.js"></script>
+</head>
+<body>
+{include file="common/header" /}
+<div class="register">
+    <div class="bm_h">
+        <span class="o"><a href="/apply/user/login">已有帐号？现在登录</a></span>
+        <h2>注册成为开发者</h2>
+    </div>
+    <div class="bm_c">
+        <div class="a_lg">
+            <form method="post" action="/apply/user/doRegister">
+                <dl>
+                    <dt>用户名:</dt>
+                    <dd><input type="text" name="name" id="keynew" class="px" required="required" size="30" maxlength="30"/></dd>
+                    <dd class="d">登录用户名，只能由字母和数字组成，最少 3 个字符</dd>
+                    <dt>密码:</dt>
+                    <dd><input type="text" name="password" id="emailnew" class="px" required="required" size="30"/></dd>
+                    <dd class="d">登录密码，最少 6 个字符</dd>
+                    <dt>电子邮箱:</dt>
+                    <dd><input type="text" name="email" id="emailnew" class="px" required="required" size="30"/></dd>
+                    <dd class="d">请确保邮箱地址的正确性，以便您激活此帐号</dd>
+                    <dt>验证码:</dt>
+                    <dd>
+                        <input type="text" name="code" class="px" required="required" size="30" tabindex="1"/>
+                        <br/>
+                        <img id="code_img" alt="验证码" src="{:url('/apply/user/verify')}">
+                        <a href="javascript:;;" onClick="refreshs()" class="change_img">看不清，换一张</a>
+                    </dd>
+                    <dd>
+                        <label>
+                        <input type="checkbox" name="agreement" id="agreement" value="yes" class="checkbox" required="required"/>
+                            我同意接受
+                        <a href="#">《LvyeCMS! 开放平台开发者服务协议》</a>
+                        </label>
+                    </dd>
+                    <dd>
+                        <button type="submit" name="submit" id="submit" value="true" class="pnc"><strong>注 册</strong></button>
+                    </dd>
+                </dl>
+            </form>
+        </div>
+    </div>
+</div>
+{include file="common/footer" /}
+<script>
+    //刷新验证码
+    function refreshs(){
+        document.getElementById('code_img').src='{:url("/apply/user/verify")}';void(0);
+    }
+</script>
+</body>
+</html>

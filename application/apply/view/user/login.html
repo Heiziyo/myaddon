@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}styles.css"/>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}bootstrap.min.css"/>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}bootstrap-responsive.css"/>
+    <script src="{$Think.config.resouce.js}jquery.min.js"></script>
+    <script src="{$Think.config.resouce.js}bootstrap.min.js"></script>
+</head>
+<body>
+{include file="common/header" /}
+<div class="register">
+    <div class="bm_h">
+        <span class="o"><a href="/apply/user/register">没有帐号？注册</a></span>
+        <h2>登陆</h2>
+    </div>
+    <div class="bm_c">
+        <div class="a_lg">
+            <form method="post" action="">
+                <dl>
+                    <dt>用户名:</dt>
+                    <dd>
+                        <input type="text" name="keynew" id="keynew" class="px" required="required" size="30" maxlength="30"/>
+                        <a href="/apply/user/register">没有帐号？注册</a>
+                    </dd>
+                    <dt>密码:</dt>
+                    <dd>
+                        <input type="text" name="emailnew" id="emailnew" class="px" required="required" size="30"/>
+                        <a href="/apply/user/forget">忘记密码？找回</a>
+                    </dd>
+                    <dt>验证码:</dt>
+                    <dd>
+                        <input type="text" name="seccode" class="px" required="required" size="30" tabindex="1"/>
+                        <br/>
+                        <img id="code_img" alt="验证码" src="{:url('/apply/user/verify')}">
+                        <a href="javascript:;;" onClick="refreshs()" class="change_img">看不清，换一张</a>
+                    </dd>
+                    <dd>
+                        <button type="submit" name="submit" id="submit" value="true" class="pnc"><strong>登 陆</strong>
+                        </button>
+                    </dd>
+                </dl>
+            </form>
+        </div>
+    </div>
+</div>
+{include file="common/footer" /}
+<script>
+    //刷新验证码
+    function refreshs(){
+        document.getElementById('code_img').src='{:url("/apply/user/verify")}';void(0);
+    }
+</script>
+</body>
+</html>

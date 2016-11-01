@@ -19,15 +19,15 @@ return [
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
     'app_multi_module'       => true,
-    // 入口自动绑定模块
-    'auto_bind_module'       => false,
     // 注册的根命名空间
     'root_namespace'         => [],
+    // 扩展配置文件
+    'extra_config_list'      => ['database', 'route', 'validate'],
     // 扩展函数文件
     'extra_file_list'        => [THINK_PATH . 'helper' . EXT],
     // 默认输出类型
@@ -46,11 +46,9 @@ return [
     'default_filter'         => '',
     // 默认语言
     'default_lang'           => 'zh-cn',
-    // 应用类库后缀
-    'class_suffix'           => false,
-    // 控制器类后缀
+    // 是否启用控制器类后缀
     'controller_suffix'      => false,
-
+    'show_error_msg'        =>  true,
     // +----------------------------------------------------------------------
     // | 模块设置
     // +----------------------------------------------------------------------
@@ -90,15 +88,11 @@ return [
     'url_param_type'         => 0,
     // 是否开启路由
     'url_route_on'           => true,
-    // 路由使用完整匹配
-    'route_complete_match'   => false,
-    // 路由配置文件（支持配置多个）
-    'route_config_file'      => ['route'],
     // 是否强制使用路由
     'url_route_must'         => false,
     // 域名部署
     'url_domain_deploy'      => false,
-    // 域名根，如thinkphp.cn
+    // 域名根，如.thinkphp.cn
     'url_domain_root'        => '',
     // 是否自动转换URL中的控制器和操作名
     'url_convert'            => true,
@@ -149,25 +143,26 @@ return [
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
+    
+
 
     // +----------------------------------------------------------------------
     // | 日志设置
     // +----------------------------------------------------------------------
 
     'log'                    => [
-        // 日志记录方式，内置 file socket 支持扩展
-        'type'  => 'File',
+        // 日志记录方式，支持 file socket
+        'type' => 'File',
         // 日志保存目录
-        'path'  => LOG_PATH,
-        // 日志记录级别
-        'level' => [],
+        'path' => LOG_PATH,
     ],
 
     // +----------------------------------------------------------------------
-    // | Trace设置 开启 app_trace 后 有效
+    // | Trace设置
     // +----------------------------------------------------------------------
+
     'trace'                  => [
-        // 内置Html Console 支持扩展
+        //支持Html Console
         'type' => 'Html',
     ],
 
@@ -228,4 +223,18 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
+    //css js images
+    'resouce' =>[
+        'css'=> SITE_URL."/public/static/css/",
+        'js'=> SITE_URL."/public/static/js/",
+        'images'=> SITE_URL."/public/static/img/",
+        'admin_css'=> SITE_URL."/public/static/admin/",
+        'admin_js'=> SITE_URL."/public/static/admin/",
+        'admin_img'=> SITE_URL."/public/static/admin/",
+    ],
+
+    "web_root" => "http://".$_SERVER['SERVER_NAME'],
+
+
 ];

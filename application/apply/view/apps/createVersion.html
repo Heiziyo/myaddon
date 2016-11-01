@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+	<meta name="description" content="description of your site"/>
+	<meta name="author" content="author of the site"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>新版本</title>
+	<script src="{$Think.config.resouce.js}/jquery.min.js"></script>
+	<link rel="stylesheet" href="{$Think.config.resouce.css}/bootstrap.min.css"/>
+	<link rel="stylesheet" href="{$Think.config.resouce.css}/bootstrap-responsive.css"/>
+	<link rel="stylesheet" href="{$Think.config.resouce.css}/styles.css"/>
+	<script src="{$Think.config.resouce.js}/my.js"></script>
+	<script src="{$Think.config.resouce.js}/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="{$Think.config.resouce.js}/kindeditor/themes/default/default.css" />
+	<link rel="stylesheet" href="{$Think.config.resouce.js}/kindeditor/themes/simple/simple.css" />
+	<script charset="utf-8" src="{$Think.config.resouce.js}/kindeditor/kindeditor-min.js"></script>
+	<script charset="utf-8" src="{$Think.config.resouce.js}/kindeditor/lang/zh_CN.js"></script>
+	<script>
+		KindEditor.ready(function(K) {
+			K.create('#edit1', {
+				pasteType : 0
+			});
+			K.create('#edit2', {
+				pasteType : 1
+			});
+		});
+	</script>
+</head>
+<body>
+<div id="append_parent"></div>
+<!-- 顶部 -->
+<div class="top-menu">
+	<div class="container">
+	</div>
+</div>
+<!-- 顶部结束-->
+<!-- 菜单栏 -->
+{include file="common/header"/}
+<!-- 菜单栏结束-->
+<!-- 中心内容 -->
+<div class="container-page clearfix">
+	<div class="conteiner-left">
+		<h5 class="bt-blue">{$info.name}</h5>
+		<p>{$info.content}</p>
+		<span>{switch name="info.type"}
+								{case value="0"}插件{/case}
+								{case value="1"}模版{/case}
+								{default /}模块{/switch}</span><span>新添加</span><span>标签</span><br>
+		<a href="/apply/index/index"> 返回应用列表</a>
+		<ul class="left-menu">
+			<li class="list1"><a href="#">应用信息</a></li>
+			<li class="list2"><a href="#">基本设置</a></li>
+			<li class="list3"><a href="#">版本管理</a></li>
+			<li class="list4"><a href="#">说明文档</a></li>
+			<li class="list5 tongji"><a href="#">统计记录 </a>
+				<span class="right-icon"></span>
+				<ul class="tongji-submenu">
+					<li><a href="#">安装记录</a></li>
+					<li><a href="#">购买记录</a></li>
+					<li><a href="#">捐助记录</a></li>
+					<li class="noborder"><a href="#">浏览记录</a></li>
+				</ul>
+			</li>
+			<li class="list6"><a href="#">用户服务</a></li>
+			<li class="list5"><a href="#">应用下架</a></li>
+			<li class="list6 noborder"><a href="#">广告投放</a></li>
+		</ul>
+	</div>
+	<div class="conteiner-right">
+		<form method="post" action="/apply/apps/createVersion/id/{$info.id}" enctype="multipart/form-data">
+			<input type="hidden" name="pid" value="{$pid}">
+			<div class="bm_c">
+				<ul class="step cl">
+					<li><em>1</em>
+						<p>发布应用</p></li>
+					<li class="arrow">›</li>
+					<li class="a"><em>2</em>
+						<p>添加版本</p></li>
+					<li class="arrow">›</li>
+					<li><em>3</em>
+						<p>安全检查</p></li>
+					<li class="arrow">›</li>
+					<li><em>4</em>
+						<p>应用审核</p></li>
+					<li class="arrow">›</li>
+					<li><em>5</em>
+						<p>应用上线</p></li>
+				</ul>
+				<table class="tfm">
+					<tbody>
+					<tr>
+						<th>新版本名称</th>
+						<td>
+							<input type="text" name="newname" class="px1" size="20" >
+						</td>
+						<td class="xg1">
+							新分支版本的名称，最多 20 个字节
+						</td>
+					</tr>
+					<tr>
+						<th>新版本兼容性</th>
+						<td>
+							{volist name="version" id="vo"}
+							<label class="lb x4"><input
+									type="checkbox" name="compatiblenew" class="pc" value="{$vo.id}"><span
+									class="cv">{$vo.versionname}</span>
+							</label>
+							{/volist}
+						</td>
+						<td class="xg1">新版本对 lvyeCMS 的兼容性</td>
+					</tr>
+					<tr>
+						<th>新版本语言编码</th>
+						<td>
+							<label class="lb x4"><input type="checkbox" name="charsetnew[]" class="pc" value="0"
+							><span class="cc" title="简体中文">GBK</span></label>
+							<label class="lb x4"><input type="checkbox" name="charsetnew[]" class="pc" value="1"
+							><span class="cc" title="繁体中文">BIG5</span></label>
+							<label class="lb x4"><input type="checkbox" name="charsetnew[]" class="pc" value="2"
+							><span class="cc" title="简体中文UTF8">UTF8<span>SC</span></span></label>
+							<label class="lb x4"><input type="checkbox" name="charsetnew[]" class="pc" value="3"
+							><span class="cc" title="繁体中文UTF8">UTF8<span>TC</span></span></label>
+						</td>
+						<td class="xg1">新版本兼容的语言编码<br>如需自动转码，请在文件包中包含下面的文件:<br>discuz_plugin_dfsdfdsfsdsfdfdfdfdfffasdfd.xml
+							(简体中文编码)<br>文件包中已手动转码的请忽略本设置
+						</td>
+					</tr>
+					<!--<tr>-->
+					<!--<th>版本价格</th>-->
+					<!--<td>-->
+					<!--<label class="lb"><input type="radio" name="price" class="pr" value="0"-->
+					<!--checked="checked">免费</label>-->
+					<!--<label class="lb"><input type="radio" class="pr" disabled="disabled">收费</label>-->
+					<!--</td>-->
+					<!--<td class="xg1">设置此版本是否收费，以及收费的价格-->
+					<!--<br>完成 <a href="#" target="_blank" class="xi1">[身份认证]</a>-->
+					<!--才可以发布收费应用-->
+					<!--</td>-->
+					<!--</tr>-->
+					<tr>
+						<th>上传文件包</th>
+						<td>
+							<input type="file" name="filenamenew" class="pf">
+						</td>
+						<td class="xg1">上传版本的文件包，不得包含被加密的文件<br><a href="#" target="_blank">[详细说明]</a>
+						</td>
+					</tr>
+					<tr>
+						<th>备注</th>
+						<td>
+							<input type="text" name="modmemonew" class="px1" value="">
+						</td>
+						<td class="xg1">备注信息审核员将会看到</td>
+					</tr>
+					<tr>
+						<th>审核通过后版本的状态</th>
+						<td>
+							<label class="lb"><input type="radio" name="modstatus" class="pc" value="1" checked="">上架</label>
+							<label class="lb"><input type="radio" name="modstatus" class="pc"
+							                         value="2">上架(隐藏)</label>
+							<label class="lb"><input type="radio" name="modstatus" class="pc" value="0">下架</label>
+						</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<a href="javascript:;" class="bt-blue setting-more">更多设置</a>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<table class="tfm more_setting" id="more_setting"  style="display: none;">
+					<tbody>
+					<tr>
+						<th></th>
+						<td></td>
+						<td class="xg1"></td>
+					</tr>
+					<tr>
+						<th>版本介绍</th>
+						<td colspan="2">
+							<div class="tedt" style="width:650px; ">
+                              <textarea id="edit1" name="revisioninfo_0" style="width:650px;height:160px; max-height: 300px;">
+                              </textarea>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>版本更新说明</th>
+						<td colspan="2">
+							<div class="tedt" style="width:650px;">
+                                 <textarea id="edit2" name="revisionmemo_0" style="width:650px;height:160px;max-height: 300px;">
+                                 </textarea>
+							</div>
+							<div id="revisionmemo_0preview" class="tpv"></div>
+						</td>
+					</tr>
+					<!--<tr>-->
+					<!--<th>合并安装</th>-->
+					<!--<td>-->
+					<!--<textarea class="pt" style="max-width: 200px; max-height: 200px;"></textarea>-->
+					<!--</td>-->
+					<!--<td class="xg1">设置此版本安装时同时安装其他应用的指定版本，必须填写免费的分支版本、扩展组件或下载资料<br>一行书写一个版本 ID(组件 ID/资料 ID)-->
+					<!--<br>-->
+					<!--</td>-->
+					<!--</tr>-->
+					</tbody>
+				</table>
+				<table class="tfm mbm">
+					<tbody>
+					<tr class="bw0_all">
+						<th></th>
+						<td class="ptm">
+							<button type="submit" class="pn pnc" value="true"><strong>提 交</strong>
+							</button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<div class="tips_info"><b>分支版本是什么？</b>分支版本是指您应用的多个共存版本，如免费版、收费版</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- 中心内容结束-->
+<!-- 页脚 -->
+{include file="common/footer"/}
+<!-- 页脚结束 -->
+<script>
+	function editorsize(obj, msg) {
+		if ($(msg).style.height != '500px') {
+			$(msg).style.height = '500px';
+			obj.innerHTML = '缩小';
+		} else {
+			$(msg).style.height = '100px';
+			obj.innerHTML = '放大';
+		}
+	}</script>
+</body>
+</html>
