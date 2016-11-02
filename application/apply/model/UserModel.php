@@ -20,7 +20,10 @@ class UserModel extends Model
         parent::initialize();
     }
 
-    //检测用户名是否已注册
+    /**
+     * @param $name 用户名
+     * @return array
+     */
     public function userName($name)
     {
         if (empty($name)) {
@@ -32,7 +35,10 @@ class UserModel extends Model
         }
     }
 
-    //添加注册用户
+    /**
+     * @param $info array
+     * @return int
+     */
     public function addUser($info)
     {
         if (empty($info)) {
@@ -42,7 +48,10 @@ class UserModel extends Model
         return $result;
     }
 
-    //匹配激活码，比对时间
+    /**
+     * @param $token 激活码
+     * @return 激活码有效期
+     */
     public function checkTime($token)
     {
         $result = db('user')->field('ftokenexptime')->where("ftoken", $token)->select();
@@ -51,14 +60,21 @@ class UserModel extends Model
         }
     }
 
-    //激活账号
+    /**
+     * @param $token 激活码
+     * @return int
+     */
     public function activation($token)
     {
         $result = db('user')->where("ftoken", $token)->setField('Fstatus', 1);
         return $result;
     }
 
-    //匹配用户
+    /**
+     * @param $name 用户名
+     * @param $pwd 密码
+     * @return int
+     */
     public function login($name, $pwd)
     {
         $result = db('user')->field('fid')->where("fname", $name)->where("fpassword", $pwd)->select();
@@ -70,7 +86,10 @@ class UserModel extends Model
 
     }
 
-    //检测邮箱是否激活
+    /**
+     * @param $id 用户ID
+     * @return int
+     */
     public function email($id)
     {
         $result = db('user')->field('fstatus')->where("fid", $id)->select();
@@ -78,5 +97,39 @@ class UserModel extends Model
             return true;
         }
     }
+
+    /**
+     * @param $email 邮箱
+     * @return array
+     */
+    public function checkEmail($email)
+    {
+        $result = db('user')->field('fid,fname,fpassword')->where("femail", $email)->select();
+        if (!empty($result)) {
+            $arr = array();
+            foreach ($result as $k=>$v) {
+                $arr = $v;
+            }
+            return $arr;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param $name 用户名
+     * @param $pwd 新密码
+     * @return int
+     */
+    public function resetPassword($name,$pwd) {
+        if (empty($name) || empty($pwd)) {
+            return false;
+        }
+        $result = db('user')->where("fname", $name)->setField('Fpassword', $pwd);
+        return $result;
+    }
+    
+    
+
 }
 

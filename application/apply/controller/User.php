@@ -102,9 +102,9 @@ class User extends Base
             // 设置发件人邮箱
             $mail->From = "gsy@alvye.cn";
             // 设置发件人名字
-            $mail->FromName = 'LvyeCMS';
+            $mail->FromName = 'LvyeCMS! 开放平台';
             // 设置邮件标题
-            $mail->Subject = '用户账号激活';
+            $mail->Subject = '[LvyeCMS!开放平台]用户账号激活';
             // 设置SMTP服务器。
             $mail->Host = 'smtp.exmail.qq.com';
             //设置使用ssl加密方式登录鉴权
@@ -170,9 +170,102 @@ class User extends Base
         }
     }
 
+    /**
+     * 退出登录
+     */
     public function out()
     {
         unset($_SESSION['user']);
         $this->error('退出登录', '/apply/user/login');
     }
+
+    /**
+     * 找回密码流程
+     */
+    public function doForget()
+    {
+        $post['Fname'] = isset($_POST['name']) ? stripslashes(trim($_POST['name'])) : '';
+        $post['Femail'] = isset($_POST['email']) ? trim($_POST['email']) : '';
+        //验证邮箱
+        if (!preg_match('/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ ', $post['Femail'])) {
+            $this->error('邮箱格式填写不正确！');
+        }
+        $check_email = $this->user_model->checkEmail($post['Femail']);
+        if (!empty($check_email)) {
+            $token = md5($check_email['fid'] . $check_email['fname'] . $check_email['fpassword']);
+            require_once 'class.phpmailer.php';
+            include 'class.smtp.php';
+            $mail = new \PHPMailer();
+            $mail->IsSMTP();
+            //smtp需要鉴权 这个必须是true
+            $mail->SMTPAuth = true;
+            // 设置邮件的字符编码，若不指定，则为'UTF-8'
+            $mail->CharSet = 'UTF-8';
+            $mail->IsHTML(true);
+            // 设置邮件正文
+            $mail->Body = "亲爱的" . $post['Fname'] . ":<br/>您好！您刚刚申请重置 LvyeCMS! 开放平台的帐号信息，请点击以下链接重置密码：<br/> <a href='http://" . $_SERVER["HTTP_HOST"] . "/apply/user/reset/verify/" . $token . "/email/" . $post['Femail'] . "' target='_blank'>http://" . $_SERVER["HTTP_HOST"] . "/apply/user/reset/verify/" . $token . "/email/" . $post['Femail'] . "</a><br/>如果并非是您本人发起的密码重置请求，请忽略本邮件!";
+            // 设置发件人邮箱
+            $mail->From = "gsy@alvye.cn";
+            // 设置发件人名字
+            $mail->FromName = 'LvyeCMS! 开放平台';
+            // 设置邮件标题
+            $mail->Subject = '[LvyeCMS!开放平台]密码重置请求';
+            // 设置SMTP服务器。
+            $mail->Host = 'smtp.exmail.qq.com';
+            //设置使用ssl加密方式登录鉴权
+            $mail->SMTPSecure = 'ssl';
+            // SMTP服务器的端口号
+            $mail->Port = 465;
+            // 设置用户名和密码。
+            $mail->Username = 'gsy@alvye.cn';
+            $mail->Password = 'Gsy123';
+            //收件人地址
+            $mail->AddAddress($post['Femail']);
+            if (!$mail->Send()) {
+                $this->error("发送失败");
+            } else {
+                $this->error("重置密码的邮件已发送到您的邮箱~", "/apply/user/login");
+            }
+        } else {
+            $this->error('该邮箱尚未注册！');
+        }
+    }
+
+    /**
+     * 重置密码流程
+     */
+    public function reset()
+    {
+        $verify = Request::instance()->param("verify");
+        $email = Request::instance()->param("email");
+        $contrast = $this->user_model->checkEmail($email);
+        if (!empty($contrast)) {
+            $token = md5($contrast['fid'] . $contrast['fname'] . $contrast['fpassword']);
+            if ($verify == $token) {
+                return $this->view->fetch();
+            } else {
+                $this->error('无效的连接！');
+            }
+        } else {
+            $this->error('错误的连接！');
+        }
+    }
+
+    /**
+     * 重置密码流程
+     */
+    public function resetPwd()
+    {
+        $post['Fname'] = isset($_POST['name']) ? stripslashes(trim($_POST['name'])) : '';
+        $post['Fpassword'] = isset($_POST['password']) ? md5(trim($_POST['password'])) : '';
+        $update = $this->user_model->resetPassword($post['Fname'],$post['Fpassword']);
+        if ($update) {
+            $this->error('密码修改成功！','/apply/user/login');
+        } else {
+            $this->error('密码修改失败！');
+        }
+
+    }
+
+
 }
