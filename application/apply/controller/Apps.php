@@ -15,12 +15,12 @@ use app\apply\model\MyappModel;
 use app\apply\model\VersionModel;
 class Apps extends Base{
 
-    protected function initialize()
+    public function __construct(Request $request)
     {
-
-        parent::initialize();
-
+        session_start();
+        parent::__construct($request);
     }
+
     //添加
     public function addAddon(){
         $type = Request::instance()->param("typeid");

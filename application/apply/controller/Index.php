@@ -6,16 +6,29 @@
  * Time: 16:25
  */
 namespace app\apply\controller;
+
 use app\common\controller\Base;
 use think\Db;
 use OSS\OssClient;
-class Index extends Base{
+use think\Request;
 
+class Index extends Base
+{
 
-    public function index(){
-        $data = Db::table("app_addon")->paginate(5);/*dump($data);*/
-        $this->assign('data',$data);
+    public function __construct(Request $request)
+    {
+        session_start();
+        parent::__construct($request);
+    }
 
-        return $this->view->fetch('index');
+    public function index()
+    {
+        if (isset($_SESSION['user'])) {
+            $data = Db::table("app_addon")->paginate(5);/*dump($data);*/
+            $this->assign('data', $data);
+            return $this->view->fetch('index');
+        } else {
+            return $this->view->fetch('/user/login');
+        }
     }
 }
