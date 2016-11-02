@@ -62,7 +62,12 @@ class UserModel extends Model
     public function login($name, $pwd)
     {
         $result = db('user')->field('fid')->where("fname", $name)->where("fpassword", $pwd)->select();
-        return $result[0]['fid'];
+        if (isset($result[0]['fid'])) {
+            return $result[0]['fid'];
+        } else {
+            return false;
+        }
+
     }
 
     //检测邮箱是否激活
