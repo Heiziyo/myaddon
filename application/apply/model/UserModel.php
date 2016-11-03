@@ -12,7 +12,7 @@ use think\Model;
 
 class UserModel extends Model
 {
-    public $table = "app_user";
+    public $table = 'app_user';
 
     //自定义初始化
     protected function initialize()
@@ -54,7 +54,7 @@ class UserModel extends Model
      */
     public function checkTime($token)
     {
-        $result = db('user')->field('ftokenexptime')->where("ftoken", $token)->select();
+        $result = db('user')->field('ftokenexptime')->where('ftoken', $token)->select();
         if (!empty($result)) {
             return $result[0]['ftokenexptime'];
         }
@@ -66,7 +66,7 @@ class UserModel extends Model
      */
     public function activation($token)
     {
-        $result = db('user')->where("ftoken", $token)->setField('Fstatus', 1);
+        $result = db('user')->where('ftoken', $token)->setField('Fstatus', 1);
         return $result;
     }
 
@@ -77,7 +77,7 @@ class UserModel extends Model
      */
     public function login($name, $pwd)
     {
-        $result = db('user')->field('fid')->where("fname", $name)->where("fpassword", $pwd)->select();
+        $result = db('user')->field('fid')->where('fname', $name)->where('fpassword', $pwd)->select();
         if (isset($result[0]['fid'])) {
             return $result[0]['fid'];
         } else {
@@ -92,7 +92,7 @@ class UserModel extends Model
      */
     public function email($id)
     {
-        $result = db('user')->field('fstatus')->where("fid", $id)->select();
+        $result = db('user')->field('fstatus')->where('fid', $id)->select();
         if (empty($result[0]['fstatus'])) {
             return true;
         }
@@ -104,7 +104,7 @@ class UserModel extends Model
      */
     public function checkEmail($email)
     {
-        $result = db('user')->field('fid,fname,fpassword')->where("femail", $email)->select();
+        $result = db('user')->field('fid,fname,fpassword')->where('femail', $email)->select();
         if (!empty($result)) {
             $arr = array();
             foreach ($result as $k=>$v) {
@@ -125,7 +125,7 @@ class UserModel extends Model
         if (empty($name) || empty($pwd)) {
             return false;
         }
-        $result = db('user')->where("fname", $name)->setField('Fpassword', $pwd);
+        $result = db('user')->where('fname', $name)->setField('Fpassword', $pwd);
         return $result;
     }
     

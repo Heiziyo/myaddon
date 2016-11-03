@@ -97,10 +97,10 @@ class User extends Base
             $mail->CharSet = 'UTF-8';
             $mail->IsHTML(true);
             // 设置邮件正文
-            $mail->Body = "亲爱的" . $post['Fname'] . ":<br/>欢迎您加入 LvyeCMS! 开放平台，您的账号需要邮箱认证，点击下面链接进行认证：<br/> <a href='http://" . $_SERVER["HTTP_HOST"] . "/apply/user/active/verify/" . $post['Ftoken'] . "' target='_blank'>http://" . $_SERVER["HTTP_HOST"] . "/apply/user/active/verify/" . $post['Ftoken'] . "</a><br/>如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问，该链接24小时内有效。
+            $mail->Body = '亲爱的' . $post['Fname'] . ":<br/>欢迎您加入 LvyeCMS! 开放平台，您的账号需要邮箱认证，点击下面链接进行认证：<br/> <a href='http://" . $_SERVER["HTTP_HOST"] . "/apply/user/active/verify/" . $post['Ftoken'] . "' target='_blank'>http://" . $_SERVER["HTTP_HOST"] . "/apply/user/active/verify/" . $post['Ftoken'] . "</a><br/>如果链接无法点击，请完整拷贝到浏览器地址栏里直接访问，该链接24小时内有效。
                                                     邮件服务器自动发送邮件请勿回信!";
             // 设置发件人邮箱
-            $mail->From = "gsy@alvye.cn";
+            $mail->From = 'gsy@alvye.cn';
             // 设置发件人名字
             $mail->FromName = 'LvyeCMS! 开放平台';
             // 设置邮件标题
@@ -134,11 +134,11 @@ class User extends Base
         $check_time = $this->user_model->checkTime($verify);
         $now_time = time();
         if ($now_time > $check_time) {
-            $this->error("您的激活码已过期，请登录您的账号重新发送激活邮件", "/apply/user/register");
+            $this->error('您的激活码已过期，请登录您的账号重新发送激活邮件', "/apply/user/register");
         } else {
             $activation = $this->user_model->activation($verify);
             if ($activation) {
-                $this->error("激活成功！", "/apply/user/login");
+                $this->error('激活成功！', '/apply/user/login');
             }
         }
     }
@@ -163,6 +163,7 @@ class User extends Base
                 $this->error('您的邮箱还未验证，快去邮箱验证吧~');
             } else {
                 $_SESSION['user'] = $post['Fname'];
+                $_SESSION['user'] = $user_id;
                 $this->error('登录成功', 'apply/index/index');
             }
         } else {
@@ -203,9 +204,9 @@ class User extends Base
             $mail->CharSet = 'UTF-8';
             $mail->IsHTML(true);
             // 设置邮件正文
-            $mail->Body = "亲爱的" . $post['Fname'] . ":<br/>您好！您刚刚申请重置 LvyeCMS! 开放平台的帐号信息，请点击以下链接重置密码：<br/> <a href='http://" . $_SERVER["HTTP_HOST"] . "/apply/user/reset/verify/" . $token . "/email/" . $post['Femail'] . "' target='_blank'>http://" . $_SERVER["HTTP_HOST"] . "/apply/user/reset/verify/" . $token . "/email/" . $post['Femail'] . "</a><br/>如果并非是您本人发起的密码重置请求，请忽略本邮件!";
+            $mail->Body = '亲爱的' . $post['Fname'] . ":<br/>您好！您刚刚申请重置 LvyeCMS! 开放平台的帐号信息，请点击以下链接重置密码：<br/> <a href='http://" . $_SERVER["HTTP_HOST"] . "/apply/user/reset/verify/" . $token . "/email/" . $post['Femail'] . "' target='_blank'>http://" . $_SERVER["HTTP_HOST"] . "/apply/user/reset/verify/" . $token . "/email/" . $post['Femail'] . "</a><br/>如果并非是您本人发起的密码重置请求，请忽略本邮件!";
             // 设置发件人邮箱
-            $mail->From = "gsy@alvye.cn";
+            $mail->From = 'gsy@alvye.cn';
             // 设置发件人名字
             $mail->FromName = 'LvyeCMS! 开放平台';
             // 设置邮件标题
