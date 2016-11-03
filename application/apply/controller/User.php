@@ -163,7 +163,7 @@ class User extends Base
                 $this->error('您的邮箱还未验证，快去邮箱验证吧~');
             } else {
                 $_SESSION['user'] = $post['Fname'];
-                $_SESSION['user'] = $user_id;
+                $_SESSION['id'] = $user_id;
                 $this->error('登录成功', 'apply/index/index');
             }
         } else {
