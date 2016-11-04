@@ -6,7 +6,8 @@
 	<meta name="description" content="description of your site" />
 	<meta name="author" content="author of the site" />
 	<title>LvyeCms!开放平台</title>
-	<link rel="stylesheet" href="{$Think.config.resouce.css}bootstrap.css" />
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{$Think.config.resouce.css}bootstrap-responsive.css" />
 	<!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic" />-->
 	<link rel="stylesheet" href="{$Think.config.resouce.css}styles.css" />
@@ -49,128 +50,108 @@
 
 {include file="/../../common/header" /}
 
-	<div class="page">
-		<div class="page-container">
-			<div class="container">
-				<div class="row">
-					<div class="span12 header">
-						<ul class="step cl">
-							<li class="a"><em>1</em><p>添加插件</p></li>
-							<li class="arrow">&#8250;</li>
-							<li><em>2</em><p>添加版本</p></li>
-							<li class="arrow">&#8250;</li>
-							<li><em>3</em><p>安全检查</p></li>
-							<li class="arrow">&#8250;</li>
-							<li><em>4</em><p>提交审核</p></li>
-							<li class="arrow">&#8250;</li>
-							<li><em>5</em><p>等待审核</p></li>
-							<li class="arrow">&#8250;</li>
-							<li><em>6</em><p>应用上线</p></li>
-						</ul>
-					</div>
-					<div class="span6">
-						<form class="form-horizontal" action="/apply/Apps/addAddon/typeid/{$typeid}" method="post" enctype="multipart/form-data" />
-						<input type="hidden" name="types" value="{$typeid}">
-						<div class="control-group">
-							<label for="identifying" class="control-label">
-								{switch name="typeid"}
-								{case value="0"}插件{/case}
-								{case value="1"}模版{/case}
-								{default /}模块{/switch}标识 </label>
-							<div class="controls">
-								<input id="identifying" type="text" name="identification" placeholder='{switch name="typeid"}
+<div class="container">
+	<div class="row" style="border: 1px solid #ccc;">
+		<div class="col-md-10  col-md-offset-2" >
+			<ul class="step cl col-md-8">
+				<li class="a"><em>1</em><p>添加插件</p></li>
+				<li class="arrow">&#8250;</li>
+				<li><em>2</em><p>添加版本</p></li>
+				<li class="arrow">&#8250;</li>
+				<li><em>3</em><p>安全检查</p></li>
+				<li class="arrow">&#8250;</li>
+				<li><em>4</em><p>提交审核</p></li>
+				<li class="arrow">&#8250;</li>
+				<li><em>5</em><p>等待审核</p></li>
+				<li class="arrow">&#8250;</li>
+				<li><em>6</em><p>应用上线</p></li>
+			</ul>
+		</div>
+		<div class="col-md-10  col-md-offset-2">
+			<form class="form-horizontal" role="form" action="/apply/Apps/addAddon/typeid/{$typeid}" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="type" value="{$typeid}">
+				<div class="form-group">
+					<label for="identifying" class="col-sm-2 control-label">
+						{switch name="typeid"}
+						{case value="0"}插件{/case}
+						{case value="1"}模版{/case}
+						{default /}模块{/switch}标识 </label>
+					<div class="col-sm-10">
+						<input id="identifying" type="text" name="identification"  class="form-control" placeholder='{switch name="typeid"}
 								{case value="0"}插件{/case}
 								{case value="1"}模版{/case}
 								{default /}模块{/switch}标识' />
-							</div>
-						</div>
-						<div class="control-group">
-							<label for="addonname" class="control-label">{switch name="typeid"}
-								{case value="0"}插件{/case}
-								{case value="1"}模版{/case}
-								{default /}模块{/switch}名称 </label>
-							<div class="controls">
-								<input id="addonname" type="text" name="name" placeholder='{switch name="typeid"}
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="addonname" class="col-sm-2 control-label">{switch name="typeid"}
+						{case value="0"}插件{/case}
+						{case value="1"}模版{/case}
+						{default /}模块{/switch}名称 </label>
+					<div class="col-sm-10">
+						<input id="addonname" type="text" name="name"   class="form-control" placeholder='{switch name="typeid"}
 								{case value="0"}插件{/case}
 								{case value="1"}模版{/case}
 								{default /}模块{/switch}名称' />
-							</div>
-						</div>
-						<div class="control-group">
-							<label for="logo" class="control-label">{switch name="typeid"}
-								{case value="0"}插件{/case}
-								{case value="1"}模版{/case}
-								{default /}模块{/switch}预览图 </label>
-							<div class="controls">
-								<input id="logo" type="file" name="pre_thumb" placeholder="logo" />
-							</div>
-						</div>
-						<div class="control-group">
-							<label for="text" class="control-label">{switch name="typeid"}
-								{case value="0"}插件{/case}
-								{case value="1"}模版{/case}{default /}模块{/switch}介绍</label>
-							<div class="controls" id="text">
-								<div class="tedt" style="width:650px">
-									<textarea id="editor_id" name="content" style="width:700px;height:300px;"></textarea>
-								</div>
-							</div>
-						</div>
-						<div class="control-group">
-							<label for="addonname" class="control-label">{switch name="typeid"}
-								{case value="0"}插件{/case}
-								{case value="1"}模版{/case}
-								{default /}模块{/switch}截图</label>
-							<div class="controls">
-								<input id="thumbs" type="file" name="thumbs[]" />
-							</div>
-							<div class="controls">
-								<input id="thumbs" type="file" name="thumbs[]" />
-							</div>
-							<div class="controls">
-								<input id="thumbs" type="file" name="thumbs[]" />
-							</div>
-							<div class="controls">
-								<input id="thumbs" type="file" name="thumbs[]" />
-							</div>
-							<div class="controls">
-								<input id="thumbs" type="file" name="thumbs[]" />
-							</div>
-
-						</div>
-
-						<div class="control-group">
-							<label for="redio" class="control-label">正版保护</label>
-							<div class="controls" id="redio">
-								<label class="radio-inline">
-									<input type="radio" name="copyright" id="inlineRadio1" value="1" style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;"> 是
-									<input type="radio" name="copyright" id="inlineRadio2" value="0" style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;"> 否
-								</label>
-							</div>
-						</div>
-						<input type="hidden" name="type" value="0">
-						<div class="control-group">
-							<div class="controls">
-								<button type="submit" class="btn">提交</button>
-							</div>
-						</div>
-						</form>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
 
-<footer>
-	<div class="container">
-		<div class="row">
-			<div class="span12">
-				<p class="pull-right">Admin Theme by Nathan Speller</p>
-				<p>&copy; Copyright 2013 FreelanceLeague</p>
-			</div>
+				<div class="form-group">
+					<label for="logo" class="col-sm-2 control-label">{switch name="typeid"}
+						{case value="0"}插件{/case}
+						{case value="1"}模版{/case}
+						{default /}模块{/switch}预览图 </label>
+					<div class="col-sm-10">
+						<input id="logo" type="file" class="form-control" name="pre_thumb" placeholder="logo" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="text" class="col-sm-2 control-label">{switch name="typeid"}
+						{case value="0"}插件{/case}
+						{case value="1"}模版{/case}{default /}模块{/switch}介绍</label>
+					<div class="col-sm-10" id="text">
+						<div class="tedt" style="width:650px">
+							<textarea id="editor_id" name="content" style="width:700px;height:300px;"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="addonname" class="col-sm-2 control-label">{switch name="typeid"}
+						{case value="0"}插件{/case}
+						{case value="1"}模版{/case}
+						{default /}模块{/switch}截图</label>
+					<div class="col-sm-10">
+						<input id="thumbs" type="file" class="form-control" name="thumbs[]" />
+						<input id="thumbs" type="file" class="form-control" name="thumbs[]" />
+						<input id="thumbs" type="file" class="form-control" name="thumbs[]" />
+						<input id="thumbs" type="file" class="form-control" name="thumbs[]" />
+						<input id="thumbs" type="file" class="form-control" name="thumbs[]" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="redio" class="col-sm-2 control-label">正版保护</label>
+					<div class="col-sm-10" id="redio">
+						<label class="radio-inline">
+							<input type="radio" name="copyright" id="inlineRadio1" value="1" style="vertical-align:middle; margin-top:-2px; margin-bottom:1px; position: static;margin-left: 0;"> 是
+							<input type="radio" name="copyright" id="inlineRadio2" value="0" style="vertical-align:middle; margin-top:-2px; margin-bottom:1px; position: static;margin-left: 0;"> 否
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-10" style="margin-left: 170px">
+						<button type="submit" class="btn">提交</button>
+					</div>
+				</div>
+			</form>
 		</div>
+
 	</div>
-</footer>
+</div>
+
+
+{include file="/../../common/footer" /}
 </body>
-<script src="{$Think.config.resouce.js}d3-setup.js"></script><script>protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://'; address = protocol + window.location.host + window.location.pathname + '/ws'; socket = new WebSocket(address);
-socket.onmessage = function(msg) { msg.data == 'reload' && window.location.reload() }</script>
 </html>

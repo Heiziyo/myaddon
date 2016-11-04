@@ -19,6 +19,7 @@ class Apps extends Base{
     {
         session_start();
         parent::__construct($request);
+
     }
 
     //添加
@@ -46,8 +47,8 @@ class Apps extends Base{
             $data['pre_thumb'] = $pre_thumb;
             $data['thumbs'] = serialize($thumb);
             $data['dateline'] = time();
-            $data['type'] = $data['types'];
-            unset($data['types']);
+            $data['user_id'] = $_SESSION ["id"];
+
             $result = $myappmodel->addData($data);
             if ($result){
 
@@ -115,10 +116,6 @@ class Apps extends Base{
             return $this->view->fetch("createVersion");
         }
     }
-
-
-
-
 
     //图片上传
     /*

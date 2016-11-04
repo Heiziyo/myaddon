@@ -19,6 +19,7 @@ class Index extends Base
     {
         session_start();
         parent::__construct($request);
+
     }
 
     public function index()

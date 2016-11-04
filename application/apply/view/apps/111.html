@@ -1,0 +1,110 @@
+<div class="page">
+	<div class="page-container">
+		<div class="container">
+			<div class="row">
+				<div class="span12 header">
+					<ul class="step cl">
+						<li class="a"><em>1</em><p>添加插件</p></li>
+						<li class="arrow">&#8250;</li>
+						<li><em>2</em><p>添加版本</p></li>
+						<li class="arrow">&#8250;</li>
+						<li><em>3</em><p>安全检查</p></li>
+						<li class="arrow">&#8250;</li>
+						<li><em>4</em><p>提交审核</p></li>
+						<li class="arrow">&#8250;</li>
+						<li><em>5</em><p>等待审核</p></li>
+						<li class="arrow">&#8250;</li>
+						<li><em>6</em><p>应用上线</p></li>
+					</ul>
+				</div>
+				<div class="span6">
+					<form class="form-horizontal" action="/apply/Apps/addAddon/typeid/{$typeid}" method="post" enctype="multipart/form-data" />
+					<input type="hidden" name="types" value="{$typeid}">
+					<div class="control-group">
+						<label for="identifying" class="control-label">
+							{switch name="typeid"}
+							{case value="0"}插件{/case}
+							{case value="1"}模版{/case}
+							{default /}模块{/switch}标识 </label>
+						<div class="controls">
+							<input id="identifying" type="text" name="identification" placeholder='{switch name="typeid"}
+								{case value="0"}插件{/case}
+								{case value="1"}模版{/case}
+								{default /}模块{/switch}标识' />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="addonname" class="control-label">{switch name="typeid"}
+							{case value="0"}插件{/case}
+							{case value="1"}模版{/case}
+							{default /}模块{/switch}名称 </label>
+						<div class="controls">
+							<input id="addonname" type="text" name="name" placeholder='{switch name="typeid"}
+								{case value="0"}插件{/case}
+								{case value="1"}模版{/case}
+								{default /}模块{/switch}名称' />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="logo" class="control-label">{switch name="typeid"}
+							{case value="0"}插件{/case}
+							{case value="1"}模版{/case}
+							{default /}模块{/switch}预览图 </label>
+						<div class="controls">
+							<input id="logo" type="file" name="pre_thumb" placeholder="logo" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="text" class="control-label">{switch name="typeid"}
+							{case value="0"}插件{/case}
+							{case value="1"}模版{/case}{default /}模块{/switch}介绍</label>
+						<div class="controls" id="text">
+							<div class="tedt" style="width:650px">
+								<textarea id="editor_id" name="content" style="width:700px;height:300px;"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label for="addonname" class="control-label">{switch name="typeid"}
+							{case value="0"}插件{/case}
+							{case value="1"}模版{/case}
+							{default /}模块{/switch}截图</label>
+						<div class="controls">
+							<input id="thumbs" type="file" name="thumbs[]" />
+						</div>
+						<div class="controls">
+							<input id="thumbs" type="file" name="thumbs[]" />
+						</div>
+						<div class="controls">
+							<input id="thumbs" type="file" name="thumbs[]" />
+						</div>
+						<div class="controls">
+							<input id="thumbs" type="file" name="thumbs[]" />
+						</div>
+						<div class="controls">
+							<input id="thumbs" type="file" name="thumbs[]" />
+						</div>
+
+					</div>
+
+					<div class="control-group">
+						<label for="redio" class="control-label">正版保护</label>
+						<div class="controls" id="redio">
+							<label class="radio-inline">
+								<input type="radio" name="copyright" id="inlineRadio1" value="1" style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;"> 是
+								<input type="radio" name="copyright" id="inlineRadio2" value="0" style="vertical-align:middle; margin-top:-2px; margin-bottom:1px;"> 否
+							</label>
+						</div>
+					</div>
+					<input type="hidden" name="type" value="0">
+					<div class="control-group">
+						<div class="controls">
+							<button type="submit" class="btn">提交</button>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
