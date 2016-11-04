@@ -259,14 +259,20 @@ class User extends Base
     {
         $post['Fname'] = isset($_POST['name']) ? stripslashes(trim($_POST['name'])) : '';
         $post['Fpassword'] = isset($_POST['password']) ? md5(trim($_POST['password'])) : '';
-        $update = $this->user_model->resetPassword($post['Fname'],$post['Fpassword']);
+        $update = $this->user_model->resetPassword($post['Fname'], $post['Fpassword']);
         if ($update) {
-            $this->error('密码修改成功！','/apply/user/login');
+            $this->error('密码修改成功！', '/apply/user/login');
         } else {
             $this->error('密码修改失败！');
         }
-
     }
 
+    /**
+     * 个人中心
+     */
+    public function info()
+    {
+        return $this->view->fetch();
+    }
 
 }

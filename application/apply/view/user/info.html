@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}styles.css"/>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}bootstrap.min.css"/>
+    <link rel="stylesheet" href="{$Think.config.resouce.css}bootstrap-responsive.css"/>
+    <script src="{$Think.config.resouce.js}jquery.min.js"></script>
+    <script src="{$Think.config.resouce.js}bootstrap.min.js"></script>
+</head>
+<body>
+{include file="/../../common/header" /}
+<div class="register">
+    <div class="bm_h">
+        <h2>{$_SESSION['user']}</h2>
+    </div>
+    <div class="bm_c">
+        <div class="tbmu bbda mbm">
+            <a class="disp" href="/apply/user/info">基本信息</a>
+            <span class="pipe">|</span>
+            <a href="#">账号密码</a>
+        </div>
+        <form method="post" action="/apply/user/doLogin">
+            <table class="tab">
+                <tr>
+                    <th>开放平台 ID</th>
+                    <td>{$_SESSION['id']}</td>
+                    <td class="xg1">开发者在平台的 ID</td>
+                </tr>
+                <tr>
+                    <th>网站</th>
+                    <td><input type="text" class="px" name="web"></td>
+                    <td class="xg1">您的网站地址</td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+{include file="/../../common/footer" /}
+</body>
+</html>

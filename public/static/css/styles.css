@@ -228,10 +228,55 @@ label {
   border-radius: 3px;
 }
 .change_img {
-  margin-top: px !important;
+  margin-top: 0px !important;
   display: inline-block;
   height: 40px;
   line-height: 40px;
   padding-top: 10px;
+}
+/*个人中心*/
+.tbmu {
+  padding-bottom: 10px;
+}
+.bbda {
+  border-bottom: 1px dotted #E4E8F1;
+}
+.mbm {
+  margin-bottom: 10px !important;
+}
+.tbmu a {
+  font-weight: 400;
+  color: #369;
+}
+.tbmu a.disp {
+  color: #555;
+  font-weight: bold;
+}
+.pipe {
+  margin: 0 5px;
+  color: #CCC;
+}
+.tab {
+  width: 100%;
+}
+.tab th {
+  padding-top: 9px;
+  padding-right: 5px;
+  width: 130px;
+  font-weight: 400;
+}
+.tab th, .tab td {
+  vertical-align: top;
+  padding: 7px 0;
+}
+.xg1{
+  color: #999 !important;
+}
+.tab .px {
+  border: 1px solid;
+  margin-right: 3px;
+  width: 150px;
+  border-color: #848484 #E0E0E0 #E0E0E0 #848484;
+  border-radius: 3px;
 }
 
