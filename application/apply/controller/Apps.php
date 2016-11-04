@@ -47,7 +47,7 @@ class Apps extends Base{
             $data['pre_thumb'] = $pre_thumb;
             $data['thumbs'] = serialize($thumb);
             $data['dateline'] = time();
-            $data['user_id'] = $_SESSION ["id"];
+            $data['user_id'] = $_SESSION["id"];
 
             $result = $myappmodel->addData($data);
             if ($result){
